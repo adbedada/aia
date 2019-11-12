@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+#test darknet
+./darknet
+
+#test yolo
+./darknet detector test cfg/coco.data cfg/yolov3.cfg yolov2.weights data/dog.jpg

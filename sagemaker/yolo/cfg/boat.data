@@ -1,0 +1,5 @@
+classes = 1
+train = data/custom/boat_train.txt
+valid = data/custom/boat_test.txt
+names = cfg/boats.names
+backup = ../model

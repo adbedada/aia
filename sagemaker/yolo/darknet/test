@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+# test yolo
+#based on
+"""
+https://github.com/awslabs/amazon-sagemaker-examples/blob/
+master/advanced_functionality/tensorflow_bring_your_own/container/cifar10/train
+"""
+
+import os
+import sys
+import subprocess
+import traceback
+
+def _run(cmd):
+
+    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=os.environ)
+
+    stdout, stderr = process.communicate()
+    print(stdout)
+    return_code = process.poll()
+    if return_code:
+        error_msg = 'Return Code: {}, CMD: {}, Err: {}'.format(return_code, cmd, stderr)
+        raise Exception(error_msg)
+
+if __name__ == '__main__':
+    try:
+        train_cmd = ['./darknet',
+                     'detector',
+                     'test',
+                     'cfg/coco.data',
+                     'cfg/yolov3-tiny.cfg',
+                     'yolov2.weights',
+                     'data/dog.jpg']
+
+        _run(train_cmd)
+        print('Test complete.')
+
+        sys.exit(0)
+    except Exception as e:
+        trc = traceback.format_exc()
+        print('Exception during training: ' + str(e) + '\n' + trc, file=sys.stderr)
+        sys.exit(255)
+
